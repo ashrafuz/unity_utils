@@ -30,7 +30,7 @@ public class AudioClassCreator {
 
                 if (!audioBundle.ContainsKey (clipname)) {
                     outfile.WriteLine (clipname);
-                    audioBundle.Add (clipname, );
+                    //audioBundle.Add (clipname, );
                 }
 
                 if (i != allClipNames.Count - 1) { outfile.Write (", \n"); }
