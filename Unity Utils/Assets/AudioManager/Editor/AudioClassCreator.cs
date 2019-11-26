@@ -14,9 +14,7 @@ public class AudioClassCreator {
 
         string classPath = "Assets/AudioManager/" + _className + ".cs";
         int invalidClipNameCounter = 0;
-
         if (File.Exists (classPath)) { File.Delete (classPath); } // delete previous file
-
         using (StreamWriter outfile = new StreamWriter (classPath)) {
             outfile.WriteLine ("public enum " + _className + " { ");
 
@@ -44,9 +42,7 @@ public class AudioClassCreator {
         AssetDatabase.Refresh ();
     }
 
-    public void AddToPool (string fileName) {
-
-    }
+    public void AddToPool (string fileName) { }
 
     public static bool IsIdentifier (string text) {
         if (string.IsNullOrEmpty (text))
