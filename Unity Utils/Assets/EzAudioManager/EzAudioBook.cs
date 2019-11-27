@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace EzAudio {
@@ -33,7 +34,8 @@ namespace EzAudio {
 
             audioBook.Clear ();
             for (int i = 0; i < _allFiles.Count; i++) {
-                audioBook.Add (new AudioPack (i, _allFiles[i], _aClips[0]));
+                AudioClip ac = (AudioClip) AssetDatabase.LoadAssetAtPath (_allFiles[i], typeof (AudioClip));
+                audioBook.Add (new AudioPack (i, _allFiles[i], ac));
             }
         }
 
