@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cf866da575e40538ec42b2f4de3020, type: 3}
+  m_Name: EzAudioBook
+  m_EditorClassIdentifier: 
+  audioBook:
+  - index: 0
+    rawEnum: 0
+    fullPath: Assets/EzAudioManager/sfx_breakshot_8.mp3
+    fileNameWithoutExtension: sfx_breakshot_8
+    audioClip: {fileID: 0}
+  - index: 1
+    rawEnum: 1
+    fullPath: Assets/EzAudioManager/sfx_puck_hits_puck_18.mp3
+    fileNameWithoutExtension: sfx_puck_hits_puck_18
+    audioClip: {fileID: 0}
+  - index: 2
+    rawEnum: 2
+    fullPath: Assets/sfx_puck_hits_edge_3.mp3
+    fileNameWithoutExtension: sfx_puck_hits_edge_3
+    audioClip: {fileID: 0}
