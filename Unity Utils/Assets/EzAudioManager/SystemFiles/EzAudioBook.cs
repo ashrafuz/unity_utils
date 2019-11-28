@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace EzAudio {
 
+    public class EzAudioConstants {
+        public const string EZ_AUDIO_MANAGER_DIR = "Assets/EzAudioManager/";
+        public const string EZ_AUDIO_BOOK_FILENAME = "EzAudioBook";
+    }
+
     [System.Serializable]
     public class AudioPack {
         public int index;
@@ -26,12 +31,7 @@ namespace EzAudio {
     public class EzAudioBook : ScriptableObject {
         public List<AudioPack> audioBook = new List<AudioPack> ();
 
-        public void AddBook (List<string> _allFiles, ref List<AudioClip> _aClips) {
-            if (_allFiles.Count != _aClips.Count) {
-                Debug.LogError ("All audio file did not load. Can't Create asset");
-                return;
-            }
-
+        public void AddBook (List<string> _allFiles) {
             audioBook.Clear ();
             for (int i = 0; i < _allFiles.Count; i++) {
                 AudioClip ac = (AudioClip) AssetDatabase.LoadAssetAtPath (_allFiles[i], typeof (AudioClip));

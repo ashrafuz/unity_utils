@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,9 +11,8 @@ namespace EzAudio {
     public class EzAudioManagerWindow : EditorWindow {
         static List<string> allAudioAssetName = new List<string> ();
         static List<AudioClip> allAudioClip = new List<AudioClip> ();
-        private static WWW audioLoader = null;
-        private static bool shouldStackClips = false;
-        public const string EZ_AUDIO_MANAGER_DIR = "Assets/EzAudioManager/";
+
+        static StringBuilder consoleLogText = new StringBuilder ();
 
         [MenuItem ("Window/EzAudioManager")]
         static void OpenWindow () {
@@ -22,55 +22,52 @@ namespace EzAudio {
         }
 
         private void OnGUI () {
+            GUILayout.Space (5);
+            GUILayout.Label ("Howdy User! Welcome to Ez Audio Manager!");
+            GUILayout.BeginHorizontal ();
+            //GUILayout.Label ("Click here to generate all audio >> ");
             if (GUILayout.Button ("Generate Audio Book", GUILayout.Height (40))) {
-                shouldStackClips = true;
-                currentlyStacked = 0;
                 GetAllAudioFileNames ();
+                CreateAudioBook ();
             }
-        }
 
-        private int currentlyStacked = 0;
-        private void Update () {
-            if (shouldStackClips && currentlyStacked < allAudioAssetName.Count) {
-                if (audioLoader == null) {
-                    string currentFileName = allAudioAssetName[currentlyStacked];
-                    audioLoader = new WWW (currentFileName);
-                    Debug.Log ("loading >> " + allAudioAssetName[currentlyStacked]);
-                } else if (audioLoader.isDone) {
-                    allAudioClip.Add (audioLoader.GetAudioClip ());
-                    currentlyStacked++;
-                    audioLoader = null;
-                }
-
-                if (currentlyStacked == allAudioAssetName.Count) { // last iteratiooon
-                    Debug.Log ("loaded all audio assets...total:: " + allAudioAssetName.Count);
-                    AudioPackCreator<EzAudioFiles> audioPackCreator = new AudioPackCreator<EzAudioFiles> (allAudioClip, allAudioAssetName);
-                    shouldStackClips = false;
-                    CreateAudioBook ();
-                }
-            }
+            GUILayout.EndHorizontal ();
+            GUILayout.Space (10);
+            GUILayout.Label (consoleLogText.ToString ());
         }
 
         static void GetAllAudioFileNames () {
             allAudioAssetName.Clear ();
             allAudioClip.Clear ();
+            consoleLogText.Clear ();
+
             string[] guids = AssetDatabase.FindAssets ("t:audioClip");
             foreach (string guid in guids) {
                 string fname = AssetDatabase.GUIDToAssetPath (guid);
                 allAudioAssetName.Add (fname);
+                consoleLogText.Append ("Found File >> " + fname + "\n");
             }
+
+            new AudioEnumCreator<EzAudioFiles> (allAudioAssetName);
         }
 
         static void CreateAudioBook () {
             EzAudioBook ezbook = ScriptableObject.CreateInstance<EzAudioBook> ();
-            ezbook.AddBook (allAudioAssetName, ref allAudioClip);
-            string fullName = EZ_AUDIO_MANAGER_DIR + "EzAudioBook.asset";
+            ezbook.AddBook (allAudioAssetName);
+            if (!Directory.Exists ("Assets/Resources")) {
+                consoleLogText.Append ("Created Resources Directory. \n");
+                Directory.CreateDirectory ("Assets/Resources");
+            }
+
+            string fullName = "Assets/Resources/" + EzAudioConstants.EZ_AUDIO_BOOK_FILENAME + ".asset";
+            consoleLogText.Append ("Created Audio Book at :: " + fullName + "\n");
             AssetDatabase.CreateAsset (ezbook, fullName);
             AssetDatabase.SaveAssets ();
-
             AssetDatabase.Refresh ();
 
-            EditorUtility.FocusProjectWindow ();
+            consoleLogText.Append ("\n\nOperation Successful!! \n Please see EzAudioSample.scene to see how to use it.\n\n");
+
+            //EditorUtility.FocusProjectWindow ();
             Selection.activeObject = ezbook;
         }
 
@@ -78,30 +75,31 @@ namespace EzAudio {
 
     /*==================*/
 
-    public class AudioPackCreator<T> {
-        public Dictionary<string, AudioClip> audioBundle = new Dictionary<string, AudioClip> ();
-        public AudioPackCreator (List<AudioClip> allClips, List<string> allNames) {
-            string classPath = EzAudioManagerWindow.EZ_AUDIO_MANAGER_DIR + typeof (T) + ".cs";
+    public class AudioEnumCreator<T> {
+        public List<string> audioBundle = new List<string> ();
+        public AudioEnumCreator (List<string> allNames) {
+            string classPath = EzAudioConstants.EZ_AUDIO_MANAGER_DIR + typeof (T) + ".cs";
             int invalidClipNameCounter = 0;
             if (File.Exists (classPath)) { File.Delete (classPath); } // delete previous file
             using (StreamWriter outfile = new StreamWriter (classPath)) {
                 outfile.WriteLine ("public enum " + typeof (T) + " { ");
 
-                for (int i = 0; i < allClips.Count; i++) {
+                for (int i = 0; i < allNames.Count; i++) {
                     outfile.Write ("\t\t");
 
                     string clipname = Path.GetFileNameWithoutExtension (allNames[i]).ToUpper ();
                     if (!IsIdentifier (clipname)) {
                         clipname = "INVALID_NAME_" + invalidClipNameCounter + " /* Invalidated name => " + allNames[i] + " =>*/";
                         invalidClipNameCounter++;
+                    } else if (audioBundle.Contains (clipname)) {
+                        clipname = "INVALID_NAME_" + invalidClipNameCounter + " /* Same name found for=> " + allNames[i] + " =>*/";
+                        invalidClipNameCounter++;
                     }
 
-                    if (!audioBundle.ContainsKey (clipname)) {
-                        outfile.Write (clipname + " = " + i);
-                        audioBundle.Add (clipname, allClips[i]);
-                    }
+                    outfile.Write (clipname + " = " + i);
+                    audioBundle.Add (clipname);
 
-                    if (i != allClips.Count - 1) { outfile.Write (", \n"); }
+                    if (i != allNames.Count - 1) { outfile.Write (", \n"); }
                 }
 
                 outfile.WriteLine ("\n}");
@@ -109,8 +107,6 @@ namespace EzAudio {
 
             AssetDatabase.Refresh ();
         }
-
-        public Dictionary<string, AudioClip> GetAudioPool () { return audioBundle; }
 
         public static bool IsIdentifier (string text) {
             if (string.IsNullOrEmpty (text))

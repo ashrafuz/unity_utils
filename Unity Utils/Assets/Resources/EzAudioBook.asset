@@ -15,16 +15,26 @@ MonoBehaviour:
   audioBook:
   - index: 0
     rawEnum: 0
-    fullPath: Assets/EzAudioManager/sfx_breakshot_8.mp3
+    fullPath: Assets/sfx_breakshot_8.mp3
     fileNameWithoutExtension: sfx_breakshot_8
     audioClip: {fileID: 8300000, guid: 3a8d0dc4b42634050b18849f2b3eb5db, type: 3}
   - index: 1
     rawEnum: 1
-    fullPath: Assets/EzAudioManager/sfx_puck_hits_puck_18.mp3
-    fileNameWithoutExtension: sfx_puck_hits_puck_18
-    audioClip: {fileID: 8300000, guid: 2150b413f81a3401e93f8f6b21d8af6f, type: 3}
-  - index: 2
-    rawEnum: 2
     fullPath: Assets/sfx_puck_hits_edge_3.mp3
     fileNameWithoutExtension: sfx_puck_hits_edge_3
     audioClip: {fileID: 8300000, guid: 4d5279e8dd3144190b73216662ff86d3, type: 3}
+  - index: 2
+    rawEnum: 2
+    fullPath: Assets/sfx_puck_hits_edge_12.mp3
+    fileNameWithoutExtension: sfx_puck_hits_edge_12
+    audioClip: {fileID: 8300000, guid: dd761330f80bd4d03868c5d859e297e4, type: 3}
+  - index: 3
+    rawEnum: 3
+    fullPath: Assets/sfx_puck_hits_edge_14.mp3
+    fileNameWithoutExtension: sfx_puck_hits_edge_14
+    audioClip: {fileID: 8300000, guid: f8939274b14634e30aacb512df79cd29, type: 3}
+  - index: 4
+    rawEnum: 4
+    fullPath: Assets/sfx_puck_hits_puck_18.mp3
+    fileNameWithoutExtension: sfx_puck_hits_puck_18
+    audioClip: {fileID: 8300000, guid: 2150b413f81a3401e93f8f6b21d8af6f, type: 3}
