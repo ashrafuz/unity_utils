@@ -6,7 +6,7 @@ namespace AUZ_UTIL {
 
     public class CustomSlowMo : SlowMono {
         protected override void SlowUpdate () {
-            Debug.Log ("running slow update");
+            //Debug.Log ("running slow update");
         }
 
         protected override void Start () {
@@ -15,7 +15,7 @@ namespace AUZ_UTIL {
 
         protected override void Update () {
             base.Update ();
-            Debug.Log ("custom update is running");
+            //Debug.Log ("custom update is running");
         }
     }
 
