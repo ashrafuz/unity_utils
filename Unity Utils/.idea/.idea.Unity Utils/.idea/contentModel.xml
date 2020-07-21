@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\user\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\user\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Unity Utils.-718932988.00" t="ExcludeRecursive" />
+    <e p="C:\Users\user\Desktop\Projects\unity\unity_utils\Unity Utils" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="EzAudioManager" t="Include">
+          <e p="Editor" t="Include">
+            <e p="EzAudioManagerWindow.cs" t="Include" />
+          </e>
+          <e p="EzAudioFiles.cs" t="Include" />
+          <e p="SystemFiles" t="Include">
+            <e p="EzAudioBook.cs" t="Include" />
+            <e p="EzAudioSystem.cs" t="Include" />
+          </e>
+          <e p="TestSound.cs" t="Include" />
+        </e>
+        <e p="SlowMono" t="Include">
+          <e p="CustomSlowMo.cs" t="Include" />
+          <e p="SlowMono.cs" t="Include" />
+        </e>
+        <e p="TouchRecognition" t="Include">
+          <e p="SwipeController.cs" t="Include" />
+        </e>
+        <e p="TouchRecognitionExtended" t="Include">
+          <e p="InputController.cs" t="Include" />
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+      <e p="TouchRecognition.csproj" t="IncludeRecursive" />
+      <e p="Unity Utils.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>
